@@ -1,22 +1,24 @@
 {
-    "autoload": {
-        "psr-0": {
-            "": "Net/"
-        }
-    },
+    "name": "anexia-it/php-epp",
+    "description": "PHP EPP Library.",
+    "keywords": ["php", "epp", "centralnic", "domains"],
+    "license": "GNU",
+    "type": "project",
     "require": {
         "php": ">=5.4"
     },
     "require-dev": {
         
     },
-    "scripts": {
-        
+    "autoload": {
+        "classmap": [
+            "database"
+        ],
+        "psr-4": {
+            "NetEpp\\": "Net/"
+        }
     },
     "config": {
-        
-    },
-    "extra": {
-        
+        "preferred-install": "dist"
     }
 }
