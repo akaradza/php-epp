@@ -11,9 +11,9 @@
         
     },
     "autoload": {
-        "psr-4": {
-            "NetEpp\\": "Net/"
-        }
+        "classmap": [
+            "Net"
+        ]
     },
     "config": {
         "preferred-install": "dist"
