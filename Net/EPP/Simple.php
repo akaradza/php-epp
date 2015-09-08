@@ -169,6 +169,7 @@ class Net_EPP_Simple extends Net_EPP_Client {
 	}
 	
 	function ping() {
+		return parent::ping();
 	}
 
 	private function _check($type, $objects) {
