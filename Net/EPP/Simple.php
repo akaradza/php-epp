@@ -62,7 +62,7 @@ class Net_EPP_Simple extends Net_EPP_Client {
 			$greeting =	$this->connect($host, $port, $timeout, $ssl, $context);
 		}
 
-		if (!is_null(greeting) && !is_null($user) && !is_null($pass)) {
+		if (!is_null($greeting) && !is_null($user) && !is_null($pass)) {
 		    $status = $this->login($user, $pass);
 		    if($status === true) {
 		        $this->logged_in = true;
