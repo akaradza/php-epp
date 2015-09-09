@@ -103,13 +103,13 @@ class Net_EPP_Simple extends Net_EPP_Client {
 	 * If "1000", true will be return. Otherweise the value will be returned (if numeric)
 	 * 
 	 * @param DOMDocument $response
-	 * @return boolean
+	 * @return boolean|integer
 	 */
 	private function evaluateResponseCode(DOMDocument $response) {
 	    
 	    $status = false;
 	    
-	    if($response != null) {
+	    if(!is_null($response)) {
     	    $result = $response->getElementsByTagName('result');
     	    
     	    foreach($result as $r) {
