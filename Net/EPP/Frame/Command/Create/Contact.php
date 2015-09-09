@@ -7,6 +7,10 @@
 
 		function __construct() {
 			parent::__construct('contact');
+			
+			$this->contactId = $this->createElement('contact:id');
+			$this->contactId->appendChild($this->createTextNode('auto'));
+			$this->payload->appendChild($this->contactId);
 		}
 	}
 ?>
