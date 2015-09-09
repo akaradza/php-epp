@@ -53,11 +53,21 @@ class Net_EPP_Simple extends Net_EPP_Client {
 		$this->connected	= false;
 		$this->logged_in	= false;
 		$this->debug		= $debug;
-		$this->user		= $user;
-		$this->context = $context;
+		$this->user			= $user;
+		$this->context 		= $context;
 
-		if ($host) $this->connect($host, $port, $timeout, $ssl, $context);
-		if ($user && $pass) $this->login($user, $pass);
+		$greeting = null;
+		if ($host) 
+		{
+			$greeting =	$this->connect($host, $port, $timeout, $ssl, $context);
+		}
+
+		if (!is_null(greeting) && !is_null($user) && !is_null($pass)) {
+		    $status = $this->login($user, $pass);
+		    if($status === true) {
+		        $this->logged_in = true;
+		    }
+		}
 	}
 
 	/**
@@ -73,14 +83,48 @@ class Net_EPP_Simple extends Net_EPP_Client {
 
 		$frame->eppVersion->appendChild($frame->createTextNode($this->greeting->getElementsByTagNameNS(Net_EPP_Frame::EPP_URN, 'version')->item(0)->textContent));
 		$frame->eppLang->appendChild($frame->createTextNode($this->greeting->getElementsByTagNameNS(Net_EPP_Frame::EPP_URN, 'lang')->item(0)->textContent));
-
+		$frame->clTRID->appendChild($frame->createTextNode($this->clTRID()));
+		
 		$els = $this->greeting->getElementsByTagNameNS(Net_EPP_Frame::EPP_URN, 'objURI');
 		for ($i = 0 ; $i < $els->length ; $i++) $frame->svcs->appendChild($frame->importNode($els->item($i), true));
 
 		$els = $this->greeting->getElementsByTagNameNS(Net_EPP_Frame::EPP_URN, 'svcExtension');
 		if (1 == $els->length) $frame->svcs->appendChild($frame->importNode($els->item(0), true));
 
-		$this->request($frame);
+		$response = $this->request($frame);
+		
+		$status = $this->evaluateResponseCode($response);
+		
+		return $status;
+	}
+	
+	/**
+	 * Evaluates the response code of response. If not set, false will be returned.
+	 * If "1000", true will be return. Otherweise the value will be returned (if numeric)
+	 * 
+	 * @param DOMDocument $response
+	 * @return boolean
+	 */
+	private function evaluateResponseCode(DOMDocument $response) {
+	    
+	    $status = false;
+	    
+	    if($response != null) {
+    	    $result = $response->getElementsByTagName('result');
+    	    
+    	    foreach($result as $r) {
+    	    
+    	        $code = trim($r->getAttribute('code'));
+    	        
+    	        if($code == '1000' || $code == 1000) {
+                    $status = true;
+    	        } elseif(is_numeric($code)) {
+    	            $status = $code;
+    	        }
+    	    }
+	    }
+	    
+	    return $status;
 	}
 
 	function checkDomain($domain) {
