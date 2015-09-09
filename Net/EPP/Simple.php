@@ -318,14 +318,11 @@ class Net_EPP_Simple extends Net_EPP_Client {
 	}
 
 	/*
-	* generate a client transaction ID
+	* Generates a client transaction ID
+	* s
 	* @return string
 	*/
-	function clTRID() {
-		$clTRID = base_convert(
-			hash('sha256', ($this->user ? $this->user.'-' : '').uniqid()),
-			16,
-			36
-		);
+	public function clTRID() {
+		return base_convert(hash('sha256', ($this->user ? $this->user.'-' : '').uniqid()), 16, 36);
 	}
 }
