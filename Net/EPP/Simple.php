@@ -29,6 +29,7 @@ class Net_EPP_Simple extends Net_EPP_Client {
 	private $connected;
 	private $logged_in;
 	private $user;
+	private $context;
 
 	var $debug;
 
@@ -53,6 +54,7 @@ class Net_EPP_Simple extends Net_EPP_Client {
 		$this->logged_in	= false;
 		$this->debug		= $debug;
 		$this->user		= $user;
+		$this->context = $context;
 
 		if ($host) $this->connect($host, $port, $timeout, $ssl, $context);
 		if ($user && $pass) $this->login($user, $pass);
