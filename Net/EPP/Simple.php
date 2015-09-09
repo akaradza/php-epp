@@ -83,7 +83,6 @@ class Net_EPP_Simple extends Net_EPP_Client {
 
 		$frame->eppVersion->appendChild($frame->createTextNode($this->greeting->getElementsByTagNameNS(Net_EPP_Frame::EPP_URN, 'version')->item(0)->textContent));
 		$frame->eppLang->appendChild($frame->createTextNode($this->greeting->getElementsByTagNameNS(Net_EPP_Frame::EPP_URN, 'lang')->item(0)->textContent));
-		$frame->clTRID->appendChild($frame->createTextNode($this->clTRID()));
 		
 		$els = $this->greeting->getElementsByTagNameNS(Net_EPP_Frame::EPP_URN, 'objURI');
 		for ($i = 0 ; $i < $els->length ; $i++) $frame->svcs->appendChild($frame->importNode($els->item($i), true));
@@ -223,7 +222,6 @@ class Net_EPP_Simple extends Net_EPP_Client {
 		$frame = new $class;
 
 		foreach ($objects as $object) $frame->addObject($object);
-		$frame->clTRID->appendChild($frame->createTextNode($this->clTRID()));
 
 		$result = $this->request($frame);
 	}
@@ -247,7 +245,6 @@ class Net_EPP_Simple extends Net_EPP_Client {
 	function logout() {
 		$this->debug("logging out");
 		$frame = new Net_EPP_Frame_Command_Logout;
-		$frame->clTRID->appendChild($frame->createTextNode($this->clTRID()));
 		$this->request($frame);
 	}
 
@@ -315,14 +312,5 @@ class Net_EPP_Simple extends Net_EPP_Client {
 		if ($this->logged_in) $this->logout();
 		$this->debug("disconnecting from server");
 		$this->disconnect();
-	}
-
-	/*
-	* Generates a client transaction ID
-	* s
-	* @return string
-	*/
-	public function clTRID() {
-		return base_convert(hash('sha256', ($this->user ? $this->user.'-' : '').uniqid()), 16, 36);
 	}
 }

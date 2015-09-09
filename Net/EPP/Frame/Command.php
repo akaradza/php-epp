@@ -24,7 +24,7 @@
 			}
 
 			$this->clTRID = $this->createElement('clTRID');
-			$this->clTRID->appendChild($this->createTextNode(''));
+			$this->clTRID->appendChild($this->createTextNode($this->clTRID()));
 			$this->body->appendChild($this->clTRID);
 		}
 
@@ -59,6 +59,15 @@
 			);
 
 			$this->extension->appendChild($this->extension->payload);
+		}
+		
+		/*
+		 * Generates a client transaction ID
+		 * s
+		 * @return string
+		 */
+		protected function clTRID() {
+		    return base_convert(hash('sha256', time() . microtime(true) . uniqid()), 16, 36);
 		}
 	}
 ?>
