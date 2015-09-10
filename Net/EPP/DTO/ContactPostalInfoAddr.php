@@ -24,7 +24,7 @@ class Net_EPP_DTO_ContactPostalInfoAddr
 
     /**
      * Mandatory.
-     * Zip / postal code.s
+     * Zip / postal code
      *
      *
      * @var String

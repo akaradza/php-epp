@@ -41,7 +41,7 @@ class Net_EPP_DTO_Contact
      * Attribute $voice.
      * Not sure if this is realy needed.
      *
-     * @var unknown
+     * @var String
      */
     public $voiceXAttribute;
 
@@ -58,6 +58,13 @@ class Net_EPP_DTO_Contact
      * @var String
      */
     public $email;
+    
+    /**
+     * Optional.
+     * 
+     * @var unknown
+     */
+    public $authInfo;
 
     public function __construct($id = null, Net_EPP_DTO_ContactPostalInfo $postalInfo, $mail, $voice = null, $fax = null)
     {
