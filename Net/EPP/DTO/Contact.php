@@ -66,7 +66,7 @@ class Net_EPP_DTO_Contact
      */
     public $authInfo;
 
-    public function __construct($id = null, Net_EPP_DTO_ContactPostalInfo $postalInfo, $mail, $voice = null, $fax = null)
+    public function __construct($id = null, Net_EPP_DTO_ContactPostalInfo $postalInfo, $email, $voice = null, $fax = null)
     {
         if (! is_null($id)) {
             $this->id = $id;
